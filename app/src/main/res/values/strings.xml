@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidExamples</string>
+    <string-array name="categories">
+        <item>CoordinatorLayout</item>
+        <item>To do#8230</item>
+    </string-array>
 </resources>
