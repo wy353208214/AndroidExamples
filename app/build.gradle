@@ -31,6 +31,7 @@ ext {
     AAVersion = '4.1.0'
     RxJava = '1.1.9'
     RxAndroid = '1.2.1'
+    GoogleProgressbar ='1.2.0'
 }
 
 dependencies {
@@ -41,6 +42,7 @@ dependencies {
     compile "com.android.support:support-v4:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
-    compile 'io.reactivex:rxjava:1.1.9'
+    compile "io.reactivex:rxjava:$RxJava"
     compile "io.reactivex:rxandroid:$RxAndroid"
+    compile "com.jpardogo.googleprogressbar:library:$GoogleProgressbar"
 }
