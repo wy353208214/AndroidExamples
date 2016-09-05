@@ -3,7 +3,6 @@ package www.wangyang.androidexample;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
@@ -16,13 +15,13 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import www.wangyang.androidexample.adapter.CommonAdapter;
 import www.wangyang.androidexample.adapter.DividerItemDecoration;
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
 
         //异步加载数据，RxJava&RxAndroid
-        create().subscribeOn(Schedulers.io())
+        resolveActivity().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber());
 
@@ -115,30 +114,33 @@ public class MainActivity extends AppCompatActivity {
 
 
     //创建被观察者
-    private Observable<List<ActivityInfo>> create() {
-        return Observable.create(new Observable.OnSubscribe<List<ActivityInfo>>() {
+    private Observable<List<ActivityInfo>> resolveActivity() {
+        return Observable.create(new Observable.OnSubscribe<ActivityInfo[]>() {
             @Override
-            public void call(Subscriber<? super List<ActivityInfo>> subscriber) {
+            public void call(Subscriber<? super ActivityInfo[]> subscriber) {
                 subscriber.onStart();
                 try {
                     Thread.sleep(2000);
                     ActivityInfo[] activityInfos = getPackageManager()
-                                                    .getPackageInfo(getApplicationContext().getPackageName(), PackageManager.GET_ACTIVITIES)
-                                                    .activities;
-
-                    List<ActivityInfo> activityInfoList = new ArrayList<>();
-                    for (ActivityInfo activityInfo : activityInfos) {
-                        if (activityInfo.name.equals(MainActivity_.class.getName()))
-                            continue;
-                        activityInfoList.add(activityInfo);
-                    }
-                    subscriber.onNext(activityInfoList);
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                                .getPackageInfo(getApplicationContext().getPackageName(), PackageManager.GET_ACTIVITIES)
+                                .activities;
+                    subscriber.onNext(activityInfos);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 subscriber.onCompleted();
+            }
+        }).map(new Func1<ActivityInfo[], List<ActivityInfo>>() {
+            @Override
+            public List<ActivityInfo> call(ActivityInfo[] activityInfos) {
+                //通过map变换将数组转换成链表
+                List<ActivityInfo> activityInfoList = new ArrayList<>();
+                for (ActivityInfo activityInfo : activityInfos) {
+                    if (activityInfo.name.equals(MainActivity_.class.getName()))
+                        continue;
+                    activityInfoList.add(activityInfo);
+                }
+                return activityInfoList;
             }
         });
     }
