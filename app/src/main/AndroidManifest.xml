@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CoordinatorActivity"
+        <activity android:name=".CoordinatorActivity_"
             android:label="CoordinatorActivity详解">
 
         </activity>
