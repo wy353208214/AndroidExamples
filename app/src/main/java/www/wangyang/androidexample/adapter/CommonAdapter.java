@@ -31,7 +31,7 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.setText(position + "、" + strings.get(position).name);
+        holder.mTextView.setText(strings.get(position).loadLabel(holder.mTextView.getContext().getPackageManager()));
     }
 
     @Override

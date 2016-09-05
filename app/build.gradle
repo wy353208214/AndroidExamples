@@ -32,6 +32,7 @@ ext {
     RxJava = '1.1.9'
     RxAndroid = '1.2.1'
     GoogleProgressbar ='1.2.0'
+    RecyclerviewAnimators ='2.2.4'
 }
 
 dependencies {
@@ -45,4 +46,5 @@ dependencies {
     compile "io.reactivex:rxjava:$RxJava"
     compile "io.reactivex:rxandroid:$RxAndroid"
     compile "com.jpardogo.googleprogressbar:library:$GoogleProgressbar"
+    compile "jp.wasabeef:recyclerview-animators:$RecyclerviewAnimators"
 }
