@@ -33,11 +33,12 @@ ext {
     RxAndroid = '1.2.1'
     GoogleProgressbar ='1.2.0'
     RecyclerviewAnimators ='2.2.4'
+    permission_utils ='1.0.2'
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    apt "org.androidannotations:androidannotations:4.1.0"
+    apt "org.androidannotations:androidannotations:$AAVersion"
     compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:support-v4:$supportLibraryVersion"
@@ -47,4 +48,5 @@ dependencies {
     compile "io.reactivex:rxandroid:$RxAndroid"
     compile "com.jpardogo.googleprogressbar:library:$GoogleProgressbar"
     compile "jp.wasabeef:recyclerview-animators:$RecyclerviewAnimators"
+    compile "rebus:permission-utils:$permission_utils"
 }

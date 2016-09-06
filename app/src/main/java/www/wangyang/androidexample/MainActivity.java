@@ -3,6 +3,7 @@ package www.wangyang.androidexample;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
@@ -21,10 +22,10 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import www.wangyang.androidexample.adapter.CommonAdapter;
 import www.wangyang.androidexample.adapter.DividerItemDecoration;
+import www.wangyang.androidexample.adapter.MainAdapter;
 import www.wangyang.androidexample.adapter.OnRecycleItemClickListener;
 
 /**
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.getItemAnimator().setAddDuration(1000);
         recyclerView.getItemAnimator().setRemoveDuration(1000);
 
-        commonAdapter = new CommonAdapter(categoryList);
+        commonAdapter = new MainAdapter(categoryList, R.layout.item_category);
         recyclerView.setAdapter(commonAdapter);
 
         recyclerView.addOnItemTouchListener(new OnRecycleItemClickListener(recyclerView) {
@@ -115,32 +116,29 @@ public class MainActivity extends AppCompatActivity {
 
     //创建被观察者
     private Observable<List<ActivityInfo>> resolveActivity() {
-        return Observable.create(new Observable.OnSubscribe<ActivityInfo[]>() {
+        return Observable.create(new Observable.OnSubscribe<List<ActivityInfo>>() {
             @Override
-            public void call(Subscriber<? super ActivityInfo[]> subscriber) {
+            public void call(Subscriber<? super List<ActivityInfo>> subscriber) {
                 subscriber.onStart();
                 try {
                     Thread.sleep(2000);
-                    ActivityInfo[] activityInfos = getPackageManager()
-                                .getPackageInfo(getApplicationContext().getPackageName(), PackageManager.GET_ACTIVITIES)
-                                .activities;
-                    subscriber.onNext(activityInfos);
+                    List<ActivityInfo> activityInfoList = new ArrayList<>();
+                    Intent intent = new Intent();
+                    intent.setPackage(getPackageName());
+                    intent.setAction(Intent.ACTION_MAIN);
+                    List<ResolveInfo> resolveInfos = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
+                    for (ResolveInfo resolveInfo : resolveInfos) {
+                        ActivityInfo activityInfo = resolveInfo.activityInfo;
+                        if (activityInfo.name.equals(MainActivity_.class.getName()))
+                            continue;
+                        activityInfoList.add(activityInfo);
+
+                    }
+                    subscriber.onNext(activityInfoList);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 subscriber.onCompleted();
-            }
-        }).map(new Func1<ActivityInfo[], List<ActivityInfo>>() {
-            @Override
-            public List<ActivityInfo> call(ActivityInfo[] activityInfos) {
-                //通过map变换将数组转换成链表
-                List<ActivityInfo> activityInfoList = new ArrayList<>();
-                for (ActivityInfo activityInfo : activityInfos) {
-                    if (activityInfo.name.equals(MainActivity_.class.getName()))
-                        continue;
-                    activityInfoList.add(activityInfo);
-                }
-                return activityInfoList;
             }
         });
     }
