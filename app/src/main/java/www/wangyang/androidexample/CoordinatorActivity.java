@@ -45,9 +45,9 @@ public class CoordinatorActivity extends BaseActivity {
 
         fragmentList = new ArrayList<>();
         titleList = new ArrayList<>();
-        for (String title : titles) {
-            titleList.add(title);
-            fragmentList.add(ContactListFragment_.builder().title("title").build());
+        for (int i = 0; i < titles.length; i++) {
+            titleList.add(titles[i]);
+            fragmentList.add(ContactListFragment_.builder().title(titles[i]).build());
         }
         CommonFragmentAdapter commonFragmentAdapter = new CommonFragmentAdapter(getSupportFragmentManager(), fragmentList, titleList);
         viewPager.setAdapter(commonFragmentAdapter);
