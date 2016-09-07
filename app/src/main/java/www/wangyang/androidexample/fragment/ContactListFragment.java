@@ -143,6 +143,7 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
                 contact.setPhoneNumber(phoneNumber);
                 contacts.add(contact);
             }
+            phone.close();
         }
         cursor.close();
         loadComplete(contacts);

@@ -51,6 +51,7 @@ public class CoordinatorActivity extends BaseActivity {
         }
         CommonFragmentAdapter commonFragmentAdapter = new CommonFragmentAdapter(getSupportFragmentManager(), fragmentList, titleList);
         viewPager.setAdapter(commonFragmentAdapter);
+        viewPager.setOffscreenPageLimit(10);
         tabLayout.setupWithViewPager(viewPager);
     }
 
