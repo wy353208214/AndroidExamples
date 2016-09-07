@@ -28,6 +28,7 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import www.wangyang.androidexample.R;
+import www.wangyang.androidexample.activity.CoordinatorActivity_;
 import www.wangyang.androidexample.adapter.ContactAdapter;
 import www.wangyang.androidexample.adapter.DividerItemDecoration;
 import www.wangyang.androidexample.adapter.OnRecycleItemClickListener;
@@ -80,7 +81,8 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
         recyclerView.addOnItemTouchListener(new OnRecycleItemClickListener(recyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-                resetContacts(0, 0);
+//                resetContacts(0, 0);
+
             }
         });
     }

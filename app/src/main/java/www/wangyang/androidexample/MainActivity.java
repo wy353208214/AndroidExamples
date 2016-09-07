@@ -23,6 +23,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import www.wangyang.androidexample.activity.BaseActivity;
 import www.wangyang.androidexample.adapter.CommonAdapter;
 import www.wangyang.androidexample.adapter.DividerItemDecoration;
 import www.wangyang.androidexample.adapter.MainAdapter;
@@ -61,7 +62,7 @@ import www.wangyang.androidexample.adapter.OnRecycleItemClickListener;
 */
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @ViewById(R.id.main_rcv)
     RecyclerView recyclerView;

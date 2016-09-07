@@ -1,4 +1,4 @@
-package www.wangyang.androidexample;
+package www.wangyang.androidexample.activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import www.wangyang.androidexample.R;
 import www.wangyang.androidexample.adapter.CommonFragmentAdapter;
 import www.wangyang.androidexample.fragment.ContactListFragment_;
 

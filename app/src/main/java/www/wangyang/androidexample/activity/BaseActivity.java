@@ -1,4 +1,4 @@
-package www.wangyang.androidexample;
+package www.wangyang.androidexample.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
