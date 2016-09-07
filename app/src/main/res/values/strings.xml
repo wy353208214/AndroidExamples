@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidExamples</string>
+    <string name="content">想看就向下滚动啊</string>
+    <string name="remind">Come soon......</string>
 </resources>

@@ -2,8 +2,6 @@ package www.wangyang.androidexample.fragment;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -11,9 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -28,7 +27,6 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import www.wangyang.androidexample.R;
-import www.wangyang.androidexample.activity.CoordinatorActivity_;
 import www.wangyang.androidexample.adapter.ContactAdapter;
 import www.wangyang.androidexample.adapter.DividerItemDecoration;
 import www.wangyang.androidexample.adapter.OnRecycleItemClickListener;
@@ -56,12 +54,13 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
 
     @ViewById(R.id.contact_rcv)
     RecyclerView recyclerView;
+    @ViewById(R.id.loading_progress)
+    ProgressBar progressBar;
     @FragmentArg
     String title;
+
     private List<Contact> contactList = new ArrayList<>();
     private ContactAdapter contactAdapter;
-
-    private AlertDialog alertDialog;
 
     @AfterViews
     public void afterViews() {
@@ -75,13 +74,12 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
         contactAdapter = new ContactAdapter(contactList, R.layout.item_category);
         recyclerView.setAdapter(contactAdapter);
 
-        if (title.equals("Tab#1"))
+        if (title.equals("Contact"))
             getLoaderManager().initLoader(0, null, this);
 
         recyclerView.addOnItemTouchListener(new OnRecycleItemClickListener(recyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder viewHolder) {
-//                resetContacts(0, 0);
 
             }
         });
@@ -89,13 +87,7 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        alertDialog = new AlertDialog.Builder(getActivity())
-                .setView(getActivity().getLayoutInflater().inflate(R.layout.dialog_loading, null, false))
-                .setCancelable(false)
-                .create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
-
+        progressBar.setVisibility(View.VISIBLE);
         return new CursorLoader(
                 getActivity(),
                 ContactsContract.Contacts.CONTENT_URI,
@@ -158,14 +150,12 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
             contactList.add(contacts.get(i));
             contactAdapter.notifyItemInserted(i);
         }
-        alertDialog.cancel();
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         BackgroundExecutor.cancelAll("contact_task", true);
-        if (alertDialog != null)
-            alertDialog.cancel();
     }
 }

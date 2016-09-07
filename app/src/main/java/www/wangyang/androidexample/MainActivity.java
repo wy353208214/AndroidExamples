@@ -7,7 +7,6 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -121,24 +120,21 @@ public class MainActivity extends BaseActivity {
             @Override
             public void call(Subscriber<? super List<ActivityInfo>> subscriber) {
                 subscriber.onStart();
-                try {
-                    Thread.sleep(2000);
-                    List<ActivityInfo> activityInfoList = new ArrayList<>();
-                    Intent intent = new Intent();
-                    intent.setPackage(getPackageName());
-                    intent.setAction(Intent.ACTION_MAIN);
-                    List<ResolveInfo> resolveInfos = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
-                    for (ResolveInfo resolveInfo : resolveInfos) {
-                        ActivityInfo activityInfo = resolveInfo.activityInfo;
-                        if (activityInfo.name.equals(MainActivity_.class.getName()))
-                            continue;
-                        activityInfoList.add(activityInfo);
 
-                    }
-                    subscriber.onNext(activityInfoList);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                List<ActivityInfo> activityInfoList = new ArrayList<>();
+                Intent intent = new Intent();
+                intent.setPackage(getPackageName());
+                intent.setAction(Intent.ACTION_MAIN);
+                List<ResolveInfo> resolveInfos = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
+                for (ResolveInfo resolveInfo : resolveInfos) {
+                    ActivityInfo activityInfo = resolveInfo.activityInfo;
+                    if (activityInfo.name.equals(MainActivity_.class.getName()))
+                        continue;
+                    activityInfoList.add(activityInfo);
+
                 }
+                subscriber.onNext(activityInfoList);
+
                 subscriber.onCompleted();
             }
         });
