@@ -17,7 +17,9 @@ import rebus.permissionutils.PermissionUtils;
 public class BaseActivity extends AppCompatActivity {
 
     private static PermissionEnum permissionArrays[] = {
-            PermissionEnum.READ_CONTACTS
+            PermissionEnum.READ_CONTACTS,
+            PermissionEnum.READ_EXTERNAL_STORAGE,
+            PermissionEnum.WRITE_EXTERNAL_STORAGE
     };
 
 

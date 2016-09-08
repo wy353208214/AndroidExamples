@@ -23,11 +23,11 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/girl_sdv"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
-        android:src="@mipmap/girl"
         app:layout_behavior="www.wangyang.androidexample.view.ScaleBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>

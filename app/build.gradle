@@ -34,6 +34,7 @@ ext {
     GoogleProgressbar ='1.2.0'
     RecyclerviewAnimators ='2.2.4'
     permission_utils ='1.0.2'
+    Fresco="0.13.0"
 }
 
 dependencies {
@@ -49,4 +50,8 @@ dependencies {
     compile "com.jpardogo.googleprogressbar:library:$GoogleProgressbar"
     compile "jp.wasabeef:recyclerview-animators:$RecyclerviewAnimators"
     compile "rebus:permission-utils:$permission_utils"
+    compile "com.facebook.fresco:fresco:$Fresco"
+    compile "com.facebook.fresco:animated-webp:$Fresco" //webp支持
+    compile "com.facebook.fresco:webpsupport:$Fresco" //webp动态图支持
+    compile "com.facebook.fresco:animated-gif:$Fresco" //动态图支持
 }
