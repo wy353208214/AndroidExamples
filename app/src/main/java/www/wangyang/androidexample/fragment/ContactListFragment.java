@@ -59,6 +59,8 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
     @FragmentArg
     String title;
 
+    private Cursor phoneCursor;
+
     private List<Contact> contactList = new ArrayList<>();
     private ContactAdapter contactAdapter;
 
@@ -122,30 +124,37 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
             return;
         }
 
-        List<Contact> contacts = new ArrayList<>();
-        while (cursor.moveToNext()) {
+        List<Contact> contacts = null;
+        contacts = new ArrayList<>();
+        //先判断cursor是否关闭
+        while (!cursor.isClosed() && cursor.moveToNext()) {
             String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
             String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
-            Cursor phone = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+            phoneCursor = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + id, null, null);
-            while (phone.moveToNext()) { //取得电话号码(可能存在多个号码)
-                int phoneFieldColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                String phoneNumber = phone.getString(phoneFieldColumnIndex);
+            //先判断cursor是否关闭
+            while (!phoneCursor.isClosed() && phoneCursor.moveToNext()) { //取得电话号码(可能存在多个号码)
+                int phoneFieldColumnIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String phoneNumber = phoneCursor.getString(phoneFieldColumnIndex);
                 Contact contact = new Contact();
                 contact.setId(id);
                 contact.setName(name);
                 contact.setPhoneNumber(phoneNumber);
                 contacts.add(contact);
             }
-            phone.close();
+            phoneCursor.close();
         }
         cursor.close();
         loadComplete(contacts);
     }
 
 
-    @UiThread
+    @UiThread(id = "loadComplete")
     void loadComplete(List<Contact> contacts) {
+        //这里做前置检查，防止fragment被销毁之后引用
+        if (progressBar == null)
+            return;
+
         for (int i = 0; i < contacts.size(); i++) {
             contactList.add(contacts.get(i));
             contactAdapter.notifyItemInserted(i);
@@ -156,6 +165,9 @@ public class ContactListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onDetach() {
         super.onDetach();
+        getLoaderManager().destroyLoader(0);
+        phoneCursor.close();
         BackgroundExecutor.cancelAll("contact_task", true);
+        BackgroundExecutor.cancelAll("loadComplete", true);
     }
 }
