@@ -1,5 +1,6 @@
 package www.wangyang.androidexample.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -44,7 +45,8 @@ public class CoordinatorActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.titlebar_search) {
-
+//                    BottomBarActivity_.intent(getApplicationContext()).start();
+                    startActivity(new Intent(CoordinatorActivity.this, BottomBarActivity_.class));
                 }
                 return false;
             }
