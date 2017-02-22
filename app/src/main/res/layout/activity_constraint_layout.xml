@@ -8,35 +8,57 @@
     tools:context="www.wangyang.androidexample.activity.ConstraintLayoutActivity">
 
 
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:src="@mipmap/girl"
+            android:id="@+id/imageView"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            app:layout_constraintRight_toLeftOf="@+id/job_name"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="8dp"/>
+
     <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp" />
+            android:text="置业顾问"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/job_name"
+            tools:layout_constraintTop_creator="1"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="8dp"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="76dp"/>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar2"
-        app:layout_constraintLeft_toRightOf="@+id/textView"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <TextView
+            android:text="满堂红"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/company"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/job_name"
+            tools:layout_constraintTop_creator="1"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/job_name"/>
 
-    <CheckBox
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
-        app:layout_constraintRight_toLeftOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar2" />
+    <TextView
+            android:text="广州"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/city"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toLeftOf="@+id/company"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            android:layout_marginBottom="4dp"/>
 
 </android.support.constraint.ConstraintLayout>

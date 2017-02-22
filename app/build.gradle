@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'com.antfortune.freeline'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25'
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "www.wangyang.androidexample"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -28,13 +29,14 @@ apt {
 
 ext {
     supportLibraryVersion = '25.0.0'
-    AAVersion = '4.1.0'
+    AAVersion = '4.2.0'
     RxJava = '1.1.9'
     RxAndroid = '1.2.1'
     GoogleProgressbar ='1.2.0'
     RecyclerviewAnimators ='2.2.4'
     permission_utils ='1.0.2'
-    Fresco="0.13.0"
+    Fresco='0.13.0'
+    ALogger='1.15'
 }
 
 dependencies {
@@ -55,4 +57,5 @@ dependencies {
     compile "com.facebook.fresco:animated-webp:$Fresco" //webp支持
     compile "com.facebook.fresco:webpsupport:$Fresco" //webp动态图支持
     compile "com.facebook.fresco:animated-gif:$Fresco" //动态图支持
+    compile "com.orhanobut:logger:$ALogger"
 }
